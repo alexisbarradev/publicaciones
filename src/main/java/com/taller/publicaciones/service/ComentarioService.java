@@ -20,7 +20,6 @@ public class ComentarioService {
 
     private final ComentarioRepository comentarioRepository;
     private final PublicacionService publicacionService;
-    private final UserServiceClient userServiceClient;
 
     public List<Comentario> findAll() {
         return comentarioRepository.findAll();
@@ -55,15 +54,6 @@ public class ComentarioService {
         if (!publicacionService.existsById(comentario.getIdPublicacion())) {
             throw new RuntimeException("Publicacion not found with id: " + comentario.getIdPublicacion());
         }
-
-        // Validate that the author exists in the user service
-        userServiceClient.userExists(comentario.getIdAutor())
-                .subscribe(exists -> {
-                    if (!exists) {
-                        log.warn("Attempted to create comment with non-existent user ID: {}", comentario.getIdAutor());
-                        throw new RuntimeException("User with ID " + comentario.getIdAutor() + " does not exist");
-                    }
-                });
 
         log.info("Creating new comment for publication: {}", comentario.getIdPublicacion());
         return comentarioRepository.save(comentario);

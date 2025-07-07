@@ -19,7 +19,6 @@ import java.util.Optional;
 public class PublicacionService {
 
     private final PublicacionRepository publicacionRepository;
-    private final UserServiceClient userServiceClient;
 
     public List<Publicacion> findAll() {
         return publicacionRepository.findAll();
@@ -46,15 +45,6 @@ public class PublicacionService {
     }
 
     public Publicacion save(Publicacion publicacion) {
-        // Validate that the author exists in the user service
-        userServiceClient.userExists(publicacion.getIdAutor())
-                .subscribe(exists -> {
-                    if (!exists) {
-                        log.warn("Attempted to create publication with non-existent user ID: {}", publicacion.getIdAutor());
-                        throw new RuntimeException("User with ID " + publicacion.getIdAutor() + " does not exist");
-                    }
-                });
-
         log.info("Creating new publication: {}", publicacion.getTitulo());
         return publicacionRepository.save(publicacion);
     }
