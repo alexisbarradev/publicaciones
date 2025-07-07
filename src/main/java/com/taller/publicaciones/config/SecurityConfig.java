@@ -1,4 +1,4 @@
-package com.backend.trading.config;
+package com.taller.publicaciones.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

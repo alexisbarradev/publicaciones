@@ -1,7 +1,7 @@
-package com.backend.trading.controller;
+package com.taller.publicaciones.controller;
 
-import com.backend.trading.model.Publicacion;
-import com.backend.trading.service.PublicacionService;
+import com.taller.publicaciones.model.Publicacion;
+import com.taller.publicaciones.service.PublicacionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;

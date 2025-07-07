@@ -1,4 +1,4 @@
-package com.backend.trading.model;
+package com.taller.publicaciones.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
