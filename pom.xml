@@ -12,9 +12,9 @@
     </parent>
 
     <groupId>com.taller</groupId>
-    <artifactId>usuarioback</artifactId>
+    <artifactId>publicacionesback</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>usuarioback</name>
+    <name>publicacionesback</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>
