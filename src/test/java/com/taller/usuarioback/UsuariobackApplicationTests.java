@@ -1,10 +1,10 @@
-package com.taller.usuarioback;
+package com.taller.publicaciones;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
-class UsuariobackApplicationTests {
+@SpringBootTest(classes = PublicacionesApplication.class)
+class PublicacionesApplicationTests {
 
 	@Test
 	void contextLoads() {
