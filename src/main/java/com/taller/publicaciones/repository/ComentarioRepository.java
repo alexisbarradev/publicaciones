@@ -1,6 +1,6 @@
-package com.backend.trading.repository;
+package com.taller.publicaciones.repository;
 
-import com.backend.trading.model.Comentario;
+import com.taller.publicaciones.model.Comentario;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
