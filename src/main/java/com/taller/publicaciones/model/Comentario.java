@@ -20,7 +20,7 @@ public class Comentario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(columnDefinition = "TEXT", nullable = false)
+    @Column(nullable = false)
     @NotBlank(message = "El texto del comentario es obligatorio")
     private String texto;
 
