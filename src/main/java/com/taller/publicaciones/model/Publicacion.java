@@ -24,7 +24,7 @@ public class Publicacion {
     @NotBlank(message = "El título es obligatorio")
     private String titulo;
 
-    @Column(columnDefinition = "TEXT")
+    @Column(nullable = false)
     @NotBlank(message = "La descripción es obligatoria")
     private String descripcion;
 
