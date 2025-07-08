@@ -2,6 +2,7 @@ package com.taller.publicaciones.service;
 
 import com.taller.publicaciones.model.Publicacion;
 import com.taller.publicaciones.repository.PublicacionRepository;
+import com.taller.publicaciones.repository.EstadoRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -19,6 +20,7 @@ import java.util.Optional;
 public class PublicacionService {
 
     private final PublicacionRepository publicacionRepository;
+    private final EstadoRepository estadoRepository;
 
     public List<Publicacion> findAll() {
         return publicacionRepository.findAll();
@@ -46,6 +48,12 @@ public class PublicacionService {
 
     public Publicacion save(Publicacion publicacion) {
         log.info("Creating new publication: {}", publicacion.getTitulo());
+        if (publicacion.getEstado() != null && publicacion.getEstado().getId() != null) {
+            publicacion.setEstado(
+                estadoRepository.findById(publicacion.getEstado().getId())
+                    .orElseThrow(() -> new RuntimeException("Estado no encontrado con id: " + publicacion.getEstado().getId()))
+            );
+        }
         return publicacionRepository.save(publicacion);
     }
 
@@ -54,7 +62,12 @@ public class PublicacionService {
                 .map(publicacion -> {
                     publicacion.setTitulo(publicacionDetails.getTitulo());
                     publicacion.setDescripcion(publicacionDetails.getDescripcion());
-                    publicacion.setEstado(publicacionDetails.getEstado());
+                    if (publicacionDetails.getEstado() != null && publicacionDetails.getEstado().getId() != null) {
+                        publicacion.setEstado(
+                            estadoRepository.findById(publicacionDetails.getEstado().getId())
+                                .orElseThrow(() -> new RuntimeException("Estado no encontrado con id: " + publicacionDetails.getEstado().getId()))
+                        );
+                    }
                     publicacion.setPrecio(publicacionDetails.getPrecio());
                     
                     log.info("Updating publication with ID: {}", id);
