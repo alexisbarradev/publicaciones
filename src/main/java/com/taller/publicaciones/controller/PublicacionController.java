@@ -79,6 +79,18 @@ public class PublicacionController {
         return ResponseEntity.ok(publicaciones);
     }
 
+    @GetMapping("/publicados")
+    public ResponseEntity<List<Publicacion>> getPublicacionesPublicadas() {
+        List<Publicacion> publicaciones = publicacionService.findByEstadoPublicado();
+        return ResponseEntity.ok(publicaciones);
+    }
+
+    @GetMapping("/autor/{idAutor}/estado/{idEstado}")
+    public ResponseEntity<List<Publicacion>> getPublicacionesByAutorAndEstado(@PathVariable Long idAutor, @PathVariable Integer idEstado) {
+        List<Publicacion> publicaciones = publicacionService.findByIdAutorAndEstado(idAutor, idEstado);
+        return ResponseEntity.ok(publicaciones);
+    }
+
     @PostMapping
     public ResponseEntity<Publicacion> createPublicacion(@Valid @RequestBody Publicacion publicacion) {
         log.info("Creating new publication: {}", publicacion.getTitulo());

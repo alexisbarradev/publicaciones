@@ -88,4 +88,12 @@ public class PublicacionService {
     public boolean existsById(Long id) {
         return publicacionRepository.existsById(id);
     }
+
+    public List<Publicacion> findByEstadoPublicado() {
+        return publicacionRepository.findByEstado_Id(1);
+    }
+
+    public List<Publicacion> findByIdAutorAndEstado(Long idAutor, Integer idEstado) {
+        return publicacionRepository.findByIdAutorAndEstado_Id(idAutor, idEstado);
+    }
 } 

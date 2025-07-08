@@ -16,6 +16,7 @@ public class DataInitializer {
                 estadoRepo.save(new Estado(1, "Publicado"));
                 estadoRepo.save(new Estado(2, "Borrador"));
                 estadoRepo.save(new Estado(3, "Rechazado"));
+                estadoRepo.save(new Estado(4, "Aprobado"));
             }
         };
     }
