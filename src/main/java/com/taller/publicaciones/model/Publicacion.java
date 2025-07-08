@@ -28,12 +28,18 @@ public class Publicacion {
     @NotBlank(message = "La descripción es obligatoria")
     private String descripcion;
 
+    @Column(nullable = false)
+    @NotNull(message = "El precio es obligatorio")
+    private Integer precio;
+
     @Column(name = "id_autor", nullable = false)
     @NotNull(message = "El ID del autor es obligatorio")
     private Long idAutor;
 
-    @Column(name = "id_estado_categoria")
-    private Integer idEstadoCategoria;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_estado", nullable = false)
+    @NotNull(message = "El estado es obligatorio")
+    private Estado estado;
 
     @Column(name = "fecha_creacion", nullable = false)
     private LocalDateTime fechaCreacion;

@@ -54,7 +54,8 @@ public class PublicacionService {
                 .map(publicacion -> {
                     publicacion.setTitulo(publicacionDetails.getTitulo());
                     publicacion.setDescripcion(publicacionDetails.getDescripcion());
-                    publicacion.setIdEstadoCategoria(publicacionDetails.getIdEstadoCategoria());
+                    publicacion.setEstado(publicacionDetails.getEstado());
+                    publicacion.setPrecio(publicacionDetails.getPrecio());
                     
                     log.info("Updating publication with ID: {}", id);
                     return publicacionRepository.save(publicacion);
