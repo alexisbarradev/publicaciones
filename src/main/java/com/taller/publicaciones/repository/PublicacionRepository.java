@@ -26,4 +26,8 @@ public interface PublicacionRepository extends JpaRepository<Publicacion, Long> 
     
     @Query("SELECT p FROM Publicacion p ORDER BY p.fechaCreacion DESC")
     Page<Publicacion> findAllOrderByFechaCreacionDesc(Pageable pageable);
+
+    List<Publicacion> findByEstado_Id(Integer idEstado);
+
+    List<Publicacion> findByIdAutorAndEstado_Id(Long idAutor, Integer idEstado);
 } 
