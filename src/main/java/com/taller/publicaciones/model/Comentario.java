@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Max;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
@@ -34,8 +36,11 @@ public class Comentario {
     @NotNull(message = "El ID de la publicación es obligatorio")
     private Long idPublicacion;
 
-    @Column(name = "imagen_url")
-    private String imagenUrl;
+    @Column(name = "valoracion", nullable = false)
+    @NotNull(message = "La valoración es obligatoria")
+    @Min(value = 1, message = "La valoración debe ser al menos 1")
+    @Max(value = 5, message = "La valoración debe ser máximo 5")
+    private Integer valoracion;
 
     @Column(name = "fecha_creacion", nullable = false)
     private LocalDateTime fechaCreacion;
