@@ -63,7 +63,7 @@ public class ComentarioService {
         return comentarioRepository.findById(id)
                 .map(comentario -> {
                     comentario.setTexto(comentarioDetails.getTexto());
-                    comentario.setImagenUrl(comentarioDetails.getImagenUrl());
+                    comentario.setValoracion(comentarioDetails.getValoracion());
                     
                     log.info("Updating comment with ID: {}", id);
                     return comentarioRepository.save(comentario);
