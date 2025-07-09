@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import jakarta.validation.Valid;
 import java.util.List;
 import java.util.Optional;
+import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/api/publicaciones")
@@ -94,12 +95,12 @@ public class PublicacionController {
 
     @PostMapping(consumes = {"multipart/form-data"})
     public ResponseEntity<Publicacion> createPublicacion(
-            @RequestPart("titulo") String titulo,
-            @RequestPart("descripcion") String descripcion,
-            @RequestPart("precio") Integer precio,
-            @RequestPart("idAutor") Long idAutor,
-            @RequestPart("estadoId") Integer estadoId,
-            @RequestPart(value = "file", required = false) MultipartFile file) {
+            @RequestParam("titulo") String titulo,
+            @RequestParam("descripcion") String descripcion,
+            @RequestParam("precio") Integer precio,
+            @RequestParam("idAutor") Long idAutor,
+            @RequestParam("estadoId") Integer estadoId,
+            @RequestParam(value = "file", required = false) MultipartFile file) {
         try {
             Publicacion publicacion = new Publicacion();
             publicacion.setTitulo(titulo);
@@ -119,6 +120,11 @@ public class PublicacionController {
             log.error("Error creating publication with photo: {}", e.getMessage());
             return ResponseEntity.badRequest().build();
         }
+    }
+
+    @PostMapping("/debug-content-type")
+    public ResponseEntity<String> debugContentType(HttpServletRequest request) {
+        return ResponseEntity.ok("Content-Type recibido: " + request.getContentType());
     }
 
     @PutMapping("/{id}")
