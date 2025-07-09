@@ -98,7 +98,7 @@ public class PublicacionController {
             @RequestPart("descripcion") String descripcion,
             @RequestPart("precio") Integer precio,
             @RequestPart("idAutor") Long idAutor,
-            @RequestPart("estado.id") Integer estadoId,
+            @RequestPart("estadoId") Integer estadoId,
             @RequestPart(value = "file", required = false) MultipartFile file) {
         try {
             Publicacion publicacion = new Publicacion();
