@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.validation.Valid;
 import java.util.List;
@@ -91,14 +92,31 @@ public class PublicacionController {
         return ResponseEntity.ok(publicaciones);
     }
 
-    @PostMapping
-    public ResponseEntity<Publicacion> createPublicacion(@Valid @RequestBody Publicacion publicacion) {
-        log.info("Creating new publication: {}", publicacion.getTitulo());
+    @PostMapping(consumes = {"multipart/form-data"})
+    public ResponseEntity<Publicacion> createPublicacion(
+            @RequestPart("titulo") String titulo,
+            @RequestPart("descripcion") String descripcion,
+            @RequestPart("precio") Integer precio,
+            @RequestPart("idAutor") Long idAutor,
+            @RequestPart("estado.id") Integer estadoId,
+            @RequestPart(value = "file", required = false) MultipartFile file) {
         try {
+            Publicacion publicacion = new Publicacion();
+            publicacion.setTitulo(titulo);
+            publicacion.setDescripcion(descripcion);
+            publicacion.setPrecio(precio);
+            publicacion.setIdAutor(idAutor);
+            // Buscar y asignar el estado
+            publicacion.setEstado(publicacionService.getEstadoById(estadoId));
+            // Si hay foto, subirla y asignar la URL
+            if (file != null && !file.isEmpty()) {
+                String urlFoto = publicacionService.uploadFotoArchivo(file);
+                publicacion.setUrlFoto(urlFoto);
+            }
             Publicacion savedPublicacion = publicacionService.save(publicacion);
             return ResponseEntity.status(HttpStatus.CREATED).body(savedPublicacion);
-        } catch (RuntimeException e) {
-            log.error("Error creating publication: {}", e.getMessage());
+        } catch (Exception e) {
+            log.error("Error creating publication with photo: {}", e.getMessage());
             return ResponseEntity.badRequest().build();
         }
     }
@@ -114,6 +132,17 @@ public class PublicacionController {
         } catch (RuntimeException e) {
             log.error("Error updating publication: {}", e.getMessage());
             return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PostMapping("/{id}/foto")
+    public ResponseEntity<Publicacion> uploadFoto(@PathVariable Long id, @RequestParam("file") MultipartFile file) {
+        try {
+            Publicacion publicacion = publicacionService.uploadFoto(id, file);
+            return ResponseEntity.ok(publicacion);
+        } catch (Exception e) {
+            log.error("Error uploading photo for publication {}: {}", id, e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 

@@ -34,6 +34,17 @@ public class Publicacion {
     @NotNull(message = "El precio es obligatorio")
     private Integer precio;
 
+    @Column(name = "url_foto")
+    private String urlFoto;
+
+    public String getUrlFoto() {
+        return urlFoto;
+    }
+
+    public void setUrlFoto(String urlFoto) {
+        this.urlFoto = urlFoto;
+    }
+
     @Column(name = "id_autor", nullable = false)
     @NotNull(message = "El ID del autor es obligatorio")
     private Long idAutor;
