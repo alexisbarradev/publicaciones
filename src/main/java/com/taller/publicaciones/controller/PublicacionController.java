@@ -1,6 +1,7 @@
 package com.taller.publicaciones.controller;
 
 import com.taller.publicaciones.model.Publicacion;
+import com.taller.publicaciones.model.PublicacionUpdateDTO;
 import com.taller.publicaciones.service.PublicacionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -130,7 +131,7 @@ public class PublicacionController {
     @PutMapping("/{id}")
     public ResponseEntity<Publicacion> updatePublicacion(
             @PathVariable Long id,
-            @Valid @RequestBody Publicacion publicacionDetails) {
+            @RequestBody PublicacionUpdateDTO publicacionDetails) {
         log.info("Updating publication with ID: {}", id);
         try {
             Publicacion updatedPublicacion = publicacionService.update(id, publicacionDetails);
