@@ -1,6 +1,7 @@
 package com.taller.publicaciones.service;
 
 import com.taller.publicaciones.model.Publicacion;
+import com.taller.publicaciones.model.PublicacionUpdateDTO;
 import com.taller.publicaciones.repository.PublicacionRepository;
 import com.taller.publicaciones.repository.EstadoRepository;
 import lombok.RequiredArgsConstructor;
@@ -61,18 +62,33 @@ public class PublicacionService {
         return publicacionRepository.save(publicacion);
     }
 
-    public Publicacion update(Long id, Publicacion publicacionDetails) {
+    public Publicacion update(Long id, PublicacionUpdateDTO publicacionDetails) {
         return publicacionRepository.findById(id)
                 .map(publicacion -> {
-                    publicacion.setTitulo(publicacionDetails.getTitulo());
-                    publicacion.setDescripcion(publicacionDetails.getDescripcion());
+                    // Only update fields that are provided (not null)
+                    if (publicacionDetails.getTitulo() != null) {
+                        publicacion.setTitulo(publicacionDetails.getTitulo());
+                    }
+                    if (publicacionDetails.getDescripcion() != null) {
+                        publicacion.setDescripcion(publicacionDetails.getDescripcion());
+                    }
+                    if (publicacionDetails.getPrecio() != null) {
+                        publicacion.setPrecio(publicacionDetails.getPrecio());
+                    }
+                    if (publicacionDetails.getUrlFoto() != null) {
+                        publicacion.setUrlFoto(publicacionDetails.getUrlFoto());
+                    }
+                    
+                    // Handle estado update
                     if (publicacionDetails.getEstado() != null && publicacionDetails.getEstado().getId() != null) {
                         publicacion.setEstado(
                             estadoRepository.findById(publicacionDetails.getEstado().getId())
                                 .orElseThrow(() -> new RuntimeException("Estado no encontrado con id: " + publicacionDetails.getEstado().getId()))
                         );
                     }
-                    publicacion.setPrecio(publicacionDetails.getPrecio());
+                    
+                    // No necesitamos manejar idAutor ya que el DTO no lo incluye
+                    // El idAutor se preserva automáticamente del objeto existente
                     
                     log.info("Updating publication with ID: {}", id);
                     return publicacionRepository.save(publicacion);
