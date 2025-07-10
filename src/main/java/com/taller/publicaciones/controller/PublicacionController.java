@@ -59,6 +59,13 @@ public class PublicacionController {
         return ResponseEntity.ok(publicaciones);
     }
 
+    @GetMapping("/usuario/{userId}")
+    public ResponseEntity<List<Publicacion>> getPublicacionesByUsuario(@PathVariable Long userId) {
+        log.info("Getting publications by user: {}", userId);
+        List<Publicacion> publicaciones = publicacionService.findByIdAutor(userId);
+        return ResponseEntity.ok(publicaciones);
+    }
+
     @GetMapping("/autor/{idAutor}/page")
     public ResponseEntity<Page<Publicacion>> getPublicacionesByAutorPaginated(
             @PathVariable Long idAutor,
