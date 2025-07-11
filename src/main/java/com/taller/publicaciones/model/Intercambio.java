@@ -43,6 +43,14 @@ public class Intercambio {
     @Column(name = "estado_intercambio", nullable = false)
     private EstadoIntercambio estadoIntercambio = EstadoIntercambio.PENDIENTE;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "confirmacion_solicitante", nullable = false)
+    private ConfirmacionEstado confirmacionSolicitante = ConfirmacionEstado.PENDIENTE;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "confirmacion_propietario", nullable = false)
+    private ConfirmacionEstado confirmacionPropietario = ConfirmacionEstado.PENDIENTE;
+
     @Column(name = "fecha_creacion", nullable = false)
     private LocalDateTime fechaCreacion;
 
@@ -59,5 +67,11 @@ public class Intercambio {
         ACEPTADO,
         RECHAZADO,
         CANCELADO
+    }
+
+    public enum ConfirmacionEstado {
+        PENDIENTE,
+        CONFIRMADO,
+        REVERTIDO
     }
 } 

@@ -27,6 +27,12 @@ public class PublicacionController {
 
     private final PublicacionService publicacionService;
 
+    @GetMapping("/test")
+    public ResponseEntity<String> test() {
+        log.info("Endpoint de prueba de publicaciones llamado");
+        return ResponseEntity.ok("Publicaciones API funcionando correctamente");
+    }
+
     @GetMapping
     public ResponseEntity<List<Publicacion>> getAllPublicaciones() {
         log.info("Getting all publications");
