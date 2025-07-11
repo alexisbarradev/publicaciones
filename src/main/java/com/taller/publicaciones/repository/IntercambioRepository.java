@@ -12,11 +12,11 @@ import java.util.List;
 public interface IntercambioRepository extends JpaRepository<Intercambio, Long> {
     
     // Obtener intercambios donde el usuario es propietario del producto solicitado en estado ACEPTADO o PROCESO
-    @Query("SELECT i FROM Intercambio i WHERE i.idUsuarioPropietario = :userId AND (i.estadoIntercambio = 'ACEPTADO' OR i.estadoIntercambio = 'PROCESO')")
+    @Query("SELECT i FROM Intercambio i WHERE i.idUsuarioPropietario = :userId AND (i.estadoIntercambio = 'ACEPTADO' OR i.estadoIntercambio = 'PROCESO' OR i.estadoIntercambio = 'PENDIENTE')")
     List<Intercambio> findOfertasRecibidas(@Param("userId") Long userId);
     
     // Obtener intercambios donde el usuario es solicitante en estado ACEPTADO o PROCESO
-    @Query("SELECT i FROM Intercambio i WHERE i.idUsuarioSolicitante = :userId AND (i.estadoIntercambio = 'ACEPTADO' OR i.estadoIntercambio = 'PROCESO')")
+    @Query("SELECT i FROM Intercambio i WHERE i.idUsuarioSolicitante = :userId AND (i.estadoIntercambio = 'ACEPTADO' OR i.estadoIntercambio = 'PROCESO' OR i.estadoIntercambio = 'PENDIENTE')")
     List<Intercambio> findOfertasEnviadas(@Param("userId") Long userId);
     
     // Obtener intercambios pendientes para un producto específico
