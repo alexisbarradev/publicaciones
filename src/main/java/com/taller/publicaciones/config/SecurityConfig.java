@@ -30,9 +30,14 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable())
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(authz -> authz
+                .requestMatchers("/").permitAll()
+                .requestMatchers("/health").permitAll()
                 .requestMatchers("/api/comentarios/**").permitAll()
                 .requestMatchers("/api/estados/**").permitAll()
+                .requestMatchers("/api/publicaciones/test").permitAll()
+                .requestMatchers("/api/intercambios/test").permitAll()
                 .requestMatchers("/api/publicaciones/**").authenticated()
+                .requestMatchers("/api/intercambios/**").authenticated()
                 .anyRequest().authenticated()
             )
             .oauth2ResourceServer(oauth2 -> oauth2

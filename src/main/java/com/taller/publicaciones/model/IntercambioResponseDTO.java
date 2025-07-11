@@ -20,4 +20,6 @@ public class IntercambioResponseDTO {
     private Intercambio.EstadoIntercambio estadoIntercambio;
     private LocalDateTime fechaCreacion;
     private LocalDateTime fechaRespuesta;
+    private Intercambio.ConfirmacionEstado confirmacionSolicitante;
+    private Intercambio.ConfirmacionEstado confirmacionPropietario;
 } 
